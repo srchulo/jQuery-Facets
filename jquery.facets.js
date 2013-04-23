@@ -64,7 +64,6 @@
 				for(var k = 0; k < bindTypes.length; k++) { 
 					if($(this).is(bindTypes[k]['selector'])) { 
 						bindType = bindTypes[k]['bindType'];
-						alert(bindTypes[k]['selector'] + " GETS " + bindTypes[k]['bindType']);
 						break; //will get first bindType of selector it matches
 					}
 				}
