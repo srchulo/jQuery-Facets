@@ -1,5 +1,5 @@
 /*
- * jQuery Facets Plugin v0.0.1
+ * jQuery Facets Plugin v0.0.2
  * http://srchulo.com/jquery_plugins/jquery_facets.html
  *
  * Copyright 2013, Adam Hopkins
@@ -96,6 +96,7 @@
 				dataArr.push(settings.URLParams[k]);
 			}
 
+			dataArr = remove_empty(dataArr);
 			//make ajax call to server for results
 			$.ajax({
 			  type: settings.ajaxMethod,
@@ -117,18 +118,14 @@
 			//remove empty valued items from serialization
 			//seems complicated, but necessary so we don't get empty selects and text inputs
 			//I did a lot of searching, if anyone finds a better way please let me know...
-			var serializeArr = new Array();
 			var arr = plugin.serializeArray();
 
-			if(settings.hashOptions.length > 0)
-				arr.push(settings.hashOptions);
-
-			for(var k = 0; k < arr.length; k++) {
-				if(arr[k]['value'] != "") {
-					//serializeArr.push({arr[k][name]:arr[k][value]});
-					serializeArr.push(arr[k]);
-				}
+			//push on any user added params
+			for(var k = 0; k < settings.hashOptions.length; k++) { 
+				arr.push(settings.hashOptions[k]);
 			}
+
+			var serializeArr = remove_empty(arr);
 
 			var hash = $.param(serializeArr);
 
@@ -144,13 +141,13 @@
 		},
 		hashInit : function () { 
 			var hash = window.location.hash;
-			if(hash != "" && hash != undefined && hash != null) { 
-				hash = hash.replace(/^#/, '');	
+			hash = hash.replace(/^#/, '');	
+			if(hash != "" && hash != undefined && hash != null && hash != "nothing") { 
 				this.deserialize(hash);	
-
 				methods.ajaxReq.apply(this);
 			}
 		},
+
   };
 
   $.fn.facets = function( method ) {
@@ -164,4 +161,13 @@
     }    
   };
 
+	function remove_empty (arr) { 
+		var newArr = new Array();
+		for(var k = 0; k < arr.length; k++) {
+			if(arr[k]['value'] != "") {
+				newArr.push(arr[k]);
+			}
+		}
+		return newArr;
+	}
 })( jQuery );

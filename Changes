@@ -1,0 +1,7 @@
+0.0.2
+
+Fixed issue with hashOptions. Also, fixed it so that empty values are not sent in ajax request
+
+0.0.1 
+
+Released to the world!
