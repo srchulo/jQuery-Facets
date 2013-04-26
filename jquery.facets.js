@@ -1,5 +1,5 @@
 /*
- * jQuery Facets Plugin v0.0.6
+ * jQuery Facets Plugin v0.0.7
  * http://srchulo.com/jquery_plugins/jquery_facets.html
  *
  * Copyright 2013, Adam Hopkins
@@ -47,6 +47,7 @@
 			 'postHash'						: function () {},
 			 'hashOptions'				: new Array(), //takes a array of hashes of key value pairs. Must be in jQuery's serializeArray() format
 			 'hash'								: true, //whether or not to put facet values in url after hashtag #
+			 'shouldSubmit'				: false, //whether form can submit or not. Default is false.
 			}, options);
 
 			//set the settings for this object
@@ -85,6 +86,10 @@
 
 			if(plugin.data('settings').hash) 
 				methods.hashInit.apply(plugin);
+
+			if(!plugin.data('settings').shouldSubmit) { 
+				plugin.submit(function(){ return false });
+			}
 
 			return plugin;
     },
