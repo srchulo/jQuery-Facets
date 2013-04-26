@@ -1,5 +1,5 @@
 /*
- * jQuery Facets Plugin v0.0.2
+ * jQuery Facets Plugin v0.0.4
  * http://srchulo.com/jquery_plugins/jquery_facets.html
  *
  * Copyright 2013, Adam Hopkins
@@ -29,6 +29,7 @@
        'bindType' 					: 'change',
        'bindTypes'					: new Array(),
        'excludeBindTypes' 	: new Array(),
+			 'generateData'				: function () { return remove_empty(this.serializeArray()) }, //generates data from the facets form to send server-side!
 			 'preAJAX'						: function () { return true }, //pre-call ajax function, used for validation etc. returns true or false
 			 'postAJAX'						: function (data) { $(plugin.data("settings").searchCont).html(data) }, //post-call ajax function
 			 'preHash'						: function () {},
@@ -89,14 +90,13 @@
 			if(!settings.preAJAX.call())
 				return;
 
-			var dataArr = plugin.serializeArray();
+			var dataArr = settings.generateData.apply(plugin);
 
 			//push on any user added params
 			for(var k = 0; k < settings.URLParams.length; k++) { 
 				dataArr.push(settings.URLParams[k]);
 			}
 
-			dataArr = remove_empty(dataArr);
 			//make ajax call to server for results
 			$.ajax({
 			  type: settings.ajaxMethod,
