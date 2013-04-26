@@ -1,5 +1,5 @@
 /*
- * jQuery Facets Plugin v0.0.4
+ * jQuery Facets Plugin v0.0.5
  * http://srchulo.com/jquery_plugins/jquery_facets.html
  *
  * Copyright 2013, Adam Hopkins
@@ -29,7 +29,18 @@
        'bindType' 					: 'change',
        'bindTypes'					: new Array(),
        'excludeBindTypes' 	: new Array(),
-			 'generateData'				: function () { return remove_empty(this.serializeArray()) }, //generates data from the facets form to send server-side!
+			 'generateData'				: function () { 
+			 
+					var settings = this.data("settings");
+			 		var dataArr = remove_empty(this.serializeArray());
+				
+					//push on any user added params
+					for(var k = 0; k < settings.URLParams.length; k++) { 
+						dataArr.push(settings.URLParams[k]);
+					}
+
+					return dataArr;
+				}, //generates data from the facets form to send server-side!
 			 'preAJAX'						: function () { return true }, //pre-call ajax function, used for validation etc. returns true or false
 			 'postAJAX'						: function (data) { $(plugin.data("settings").searchCont).html(data) }, //post-call ajax function
 			 'preHash'						: function () {},
@@ -90,18 +101,11 @@
 			if(!settings.preAJAX.call())
 				return;
 
-			var dataArr = settings.generateData.apply(plugin);
-
-			//push on any user added params
-			for(var k = 0; k < settings.URLParams.length; k++) { 
-				dataArr.push(settings.URLParams[k]);
-			}
-
 			//make ajax call to server for results
 			$.ajax({
 			  type: settings.ajaxMethod,
 			  url: settings.ajaxURL,
-				data: dataArr,
+				data: settings.generateData.apply(plugin),
 			}).done(settings.postAJAX);
 
 			if(settings.hash)
