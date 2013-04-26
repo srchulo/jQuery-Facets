@@ -1,5 +1,5 @@
 /*
- * jQuery Facets Plugin v0.0.5
+ * jQuery Facets Plugin v0.0.6
  * http://srchulo.com/jquery_plugins/jquery_facets.html
  *
  * Copyright 2013, Adam Hopkins
