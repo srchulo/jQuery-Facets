@@ -20,9 +20,6 @@
 						return true;
 					}
 				});
-
-				//return false when facets form submits
-				$("form#facets").submit(function(){ return false });
 			});
 		</script>
 		<?php
