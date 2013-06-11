@@ -1,5 +1,5 @@
 /*
- * jQuery Facets Plugin v0.0.7
+ * jQuery Facets Plugin v0.0.8
  * http://srchulo.com/jquery_plugins/jquery_facets.html
  *
  * Copyright 2013, Adam Hopkins
@@ -155,6 +155,14 @@
         this.deserialize(hash); 
         methods.ajaxReq.apply(this);
       }   
+    },  
+    get : function (key) { 
+			return this.data("settings")[key];
+		},
+    set : function (key,value) { 
+			var settings = this.data("settings");
+			settings[key] = value;
+			this.data("settings",settings);
     },  
 
   };  
