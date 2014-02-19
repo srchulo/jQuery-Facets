@@ -33,6 +33,7 @@
     "homepage": "http://srchulo.com/jquery_plugins/jquery_facets.html",
     "docs": "http://srchulo.com/jquery_plugins/jquery_facets.html",
     "download": "https://github.com/srchulo/jQuery-Facets/archive/master.zip",
+    "demo": "http://demo.srchulo.com/jquery/jquery_facets/",
     "dependencies": {
         "jquery": ">=1.5",
 	"deserialize": ">=1.2.1"
