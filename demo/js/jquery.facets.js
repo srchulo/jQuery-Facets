@@ -1,5 +1,5 @@
 /*
- * jQuery Facets Plugin v0.0.8
+ * jQuery Facets Plugin v0.0.9
  * http://srchulo.com/jquery_plugins/jquery_facets.html
  *
  * Copyright 2013, Adam Hopkins
@@ -81,7 +81,7 @@
           }   
         }   
 
-        $(this).bind(bindType, {'plugin': plugin}, methods.ajaxReq);  
+        $(this).on(bindType, {'plugin': plugin}, methods.ajaxReq);  
       }); 
 
       if(plugin.data('settings').hash) 

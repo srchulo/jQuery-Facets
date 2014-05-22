@@ -81,7 +81,7 @@
           }   
         }   
 
-        $(this).bind(bindType, {'plugin': plugin}, methods.ajaxReq);  
+        $(this).on(bindType, {'plugin': plugin}, methods.ajaxReq);  
       }); 
 
       if(plugin.data('settings').hash) 
