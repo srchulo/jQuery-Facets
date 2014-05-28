@@ -54,35 +54,18 @@
       plugin.data("settings",settings);
 
       //bind each input to the appropriate bind type
-      plugin.find(":input").each(function(){
+      var excludeBindTypes = plugin.data('settings').excludeBindTypes;
+      var bindTypes = plugin.data('settings').bindTypes;
+      var excludedBindTypesList = excludeBindTypes;
+      for(var k=0; k < bindTypes.length; k++) {
+            // add this selector to the default's exclude
+            excludedBindTypesList.push(bindTypes[k]['selector']);
 
-        //find out if we should not bind to this input
-        var excludeBindTypes = plugin.data('settings').excludeBindTypes;
-        var shouldBind = true;
-        for(var k = 0; k < excludeBindTypes.length; k++) { 
-          if($(this).is(excludeBindTypes[k])) { 
-            shouldBind = false;
-            break;
-          }   
-        }   
-
-        if(!shouldBind)
-          return true;
-
-        //use default bindType
-        var bindType = plugin.data('settings').bindType;
-
-        //see if this input has a special bindType
-        var bindTypes = plugin.data('settings').bindTypes;
-        for(var k = 0; k < bindTypes.length; k++) { 
-          if($(this).is(bindTypes[k]['selector'])) { 
-            bindType = bindTypes[k]['bindType'];
-            break; //will get first bindType of selector it matches
-          }   
-        }   
-
-        $(this).bind(bindType, {'plugin': plugin}, methods.ajaxReq);  
-      }); 
+            // Also bind to the selector on the particular type
+            plugin.on(bindTypes[k]['bindType'], bindTypes[k]['selector'], {'plugin' : plugin}, methods.ajaxReq);
+      }	
+      var bindTypeList = ':input:not(' + excludedBindTypesList.join(', ') + ')';
+      plugin.on(plugin.data('settings').bindType, bindTypeList, {'plugin': plugin}, methods.ajaxReq);
 
       if(plugin.data('settings').hash) 
         methods.hashInit.apply(plugin);
